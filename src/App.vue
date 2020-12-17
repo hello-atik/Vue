@@ -59,12 +59,12 @@
 
   width: 100%;
   height: auto;
-  min-height: 600px;
+  /* min-height: 600px; */
   padding: 10px;
   margin-top: 20px;
 
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-sizing: border-box;
-  border: 2px solid grey;
+  /* border: 2px solid grey;  */
 }
 </style>

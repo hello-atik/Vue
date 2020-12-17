@@ -3,25 +3,15 @@
     <form @submit.prevent="sendData">
       <div class="form_item">
         <span>NAME</span
-        ><input type="text" placeholder="Alex Costa" required v-model="name" />
+        ><input type="text" placeholder="Alex Costa" v-model="name" />
       </div>
       <div class="form_item">
         <span>PHONE</span
-        ><input
-          type="text"
-          placeholder="01950221560"
-          required
-          v-model="phone"
-        />
+        ><input type="text" placeholder="01950221560" v-model="phone" />
       </div>
       <div class="form_item">
         <span>EMAIL</span
-        ><input
-          type="text"
-          placeholder="example@gmail.com"
-          required
-          v-model="email"
-        />
+        ><input type="text" placeholder="example@gmail.com" v-model="email" />
       </div>
       <div class="check">
         <span>ACTIVE</span><input type="checkbox" v-model="active" />
@@ -31,28 +21,38 @@
         <button class="create" type="submit">Create</button>
       </div>
     </form>
+    <alert v-if="showAlert" @close-alert="showAlert = false"></alert>
   </div>
 </template>
 
 <script>
+import Alert from "./Alert";
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
       name: "",
       phone: "",
       email: "",
       active: false,
+      showAlert: false,
     };
   },
   methods: {
     sendData() {
-      let contact = {
-        name: this.name,
-        phone: this.phone,
-        email: this.email,
+      let c = {
+        name: this.name.trim(),
+        phone: this.phone.trim(),
+        email: this.email.trim(),
         active: this.active,
       };
-      this.$emit("add-user", contact);
+      if (!c.name || !c.phone || !c.email) {
+        this.showAlert = true;
+        return;
+      }
+      this.$emit("add-user", c);
       this.name = "";
       this.phone = "";
       this.email = "";
